@@ -46,26 +46,12 @@ conn.login(username, password, function(err, userInfo) {
     console.log("total : " + result.totalSize);
     console.log(result.done);
     console.log("fetched : " + result.records.length);
-    for( var layout in result.records) {
-      console.log(layout.Id);
-    }
+    
   });
-  // conn.tooling.sobject('Layout')
-  // .find
-  // .execute(function(err, records) {
-  //   if (err) { return console.error(err); }
-  //   console.log("fetched : " + records.length);
-  //   for (var i=0; i < records.length; i++) {
-  //     var record = records[i];
-  //     console.log('Id: ' + record.Id);
-  //     console.log('Name: ' + record.Name);
-  //   }
-  // });
 });
 
 
-app.use(router.routes())
-.use(router.allowedMethods());
+app.use(router.routes()).use(router.allowedMethods());
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, console.log(`Server started on port ${PORT}`)); 
