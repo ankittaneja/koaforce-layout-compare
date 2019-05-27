@@ -19,32 +19,53 @@ render(app, {
 });
 
 router.get('/', async (ctx, next) => {
-   ctx.body = 'Hello World!';
+  //  ctx.body = 'Hello World!';
+
 });
 
-var username = '';
-var password = '';
+var username = 'ankit.taneja@competitionline.com.rolestest';
+var password = 'Online@2019QSNTP6GRtYPCbRYr9of5IgQ6';
 
 var jsforce = require('jsforce');
 var conn = new jsforce.Connection({
   // you can change loginUrl to connect to sandbox or prerelease env.
-  // loginUrl : 'https://test.salesforce.com'
+   loginUrl : 'https://test.salesforce.com'
 });
-// conn.login(username, password, function(err, userInfo) {
-//   if (err) { return console.error(err); }
-//   // Now you can get the access token and instance URL information.
-//   // Save them to establish connection next time.
-//   console.log(conn.accessToken);
-//   console.log(conn.instanceUrl);
-//   // logged in user property
-//   console.log("User ID: " + userInfo.id);
-//   console.log("Org ID: " + userInfo.organizationId);
-//   // ...
-// });
+conn.login(username, password, function(err, userInfo) {
+  if (err) { return console.error(err); }
+  
+  // Now you can get the access token and instance URL information.
+  // Save them to establish connection next time.
+  console.log(conn.accessToken);
+  console.log(conn.instanceUrl);
+  // logged in user property
+  console.log("User ID: " + userInfo.id);
+  console.log("Org ID: " + userInfo.organizationId);
+  conn.tooling.query("Select Id, Name, TableEnumOrId from Layout where TableEnumorId = 'Account'", function(err, result) {
+    if (err) { return console.error(err); }
+    console.log("total : " + result.totalSize);
+    console.log(result.done);
+    console.log("fetched : " + result.records.length);
+    for( var layout in result.records) {
+      console.log(layout.Id);
+    }
+  });
+  // conn.tooling.sobject('Layout')
+  // .find
+  // .execute(function(err, records) {
+  //   if (err) { return console.error(err); }
+  //   console.log("fetched : " + records.length);
+  //   for (var i=0; i < records.length; i++) {
+  //     var record = records[i];
+  //     console.log('Id: ' + record.Id);
+  //     console.log('Name: ' + record.Name);
+  //   }
+  // });
+});
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+app.use(router.routes())
+.use(router.allowedMethods());
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, console.log(`Server started on port ${PORT}`)); 
