@@ -81,7 +81,6 @@ conn.login(username, password, function(err, userInfo) {
 });
 
 app.use(objects.routes()).use(objects.allowedMethods());
-
 app.use(router.routes()).use(router.allowedMethods());
 
 const PORT = process.env.PORT || 5001;
